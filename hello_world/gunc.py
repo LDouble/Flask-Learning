@@ -9,4 +9,5 @@ pidfile = "gunicorn.pid"
 logfile = "error.log"
 workers = multiprocessing.cpu_count()*2 + 1
 worker_class = "gevent"
-daemon = True
+#daemon = True
+

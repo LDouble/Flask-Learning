@@ -99,8 +99,7 @@ def do_login():
     if username and password:
         r = Redis()
         pwd = r.get(username)
-        print(pwd)
-        if pwd.decode() == password:
+        if pwd and pwd.decode() == password:
             session["uid"] = username
             flash("登录成功")
             return redirect(url_for("success", url=url_for("my")))
