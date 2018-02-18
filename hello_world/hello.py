@@ -186,7 +186,7 @@ def uploads(filename):
     return send_from_directory(UPLOAD_FOLDER, filename)
         """)
     else:
-        return redirect("login")  # 未登陆跳转到登录
+        return redirect(url_for("login"))  # 未登陆跳转到登录
 
 
 @app.route("/user/upload_pic/", methods=["POST", "GET"])
