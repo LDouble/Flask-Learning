@@ -1,0 +1,29 @@
+{% extends "Basic.html" %}
+{% block body %}
+    <body class="container">
+    <div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="page-header">
+				<h1>
+					Flask 快速入门 <small>一个小小小小的实例</small>
+				</h1>
+			</div>
+		</div>
+	</div>
+	<div class="row clearfix">
+    <div class="row">
+        <div class="col-md-8">
+    <div class="list-group">
+				 <a href="{{ url_for("start") }}" class="">一个简单的start：介绍了一个最小的flask应用</a><br>
+				 <a href="{{ url_for("register") }}" class="">用户注册：介绍了获取表单信息，使用flash</a><br>
+				 <a href="{{ url_for("login") }}" class="">用户登录：介绍了获取表单信息，使用flash、session</a><br>
+				 <a href="{{ url_for("my") }}" class="">个人中心：介绍了session、文件上传</a><br>
+				 <a href="{{ url_for("cookie") }}" class="">cookie：cookie的打印与添加</a><br>
+				 <a href="{{ url_for("header") }}" class="">header：获取头部信息</a><br>
+    </div>
+        </div>
+	</div>
+</div>
+    </body>
+{% endblock %}

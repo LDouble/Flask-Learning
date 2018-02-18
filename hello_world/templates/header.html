@@ -1,0 +1,14 @@
+{% extends "code.html" %}
+{% block pre %}
+    <div class="col-md-12">
+    <pre id="show" class="prettyprint Lang-py linenums">
+
+    </pre>
+    </div>
+{% endblock %}
+{% block more%}
+    <script>
+    result = JSON.stringify({{ str|safe }}, null, "\t");
+    document.getElementById("show").innerHTML = (result)
+    </script>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "code.html" %}
+{% block pre %}
+	<div class="row clearfix">
+		<div class="col-md-10 col-md-offset-1">
+			<form class="form-inline" role="form" method="post" action="{{ url_for("upload_pic") }}" enctype="multipart/form-data">
+				<div class="form-group">
+					 <label for="username">用户名</label>
+                    <input type="text" class="form-control" id="username" name="username" readonly value="{{ data['uid'] }}"/>
+				</div>
+				<div class="form-group" style="width: 300px">
+    <div class="file-container" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle">
+        <button class="btn btn-success fileinput-button" type="button">上传</button>
+        <input type="file" id="jobData" name="pic" onchange="loadFile(this.files[0])" style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
+    </div>
+     {% if data.get("pic") %}
+         <span id="filename" style="vertical-align: middle"><a href="{{ data['pic'] }}">点我查看头像</a> </span>
+     {% else %}
+         <span id="filename" style="vertical-align: middle">未上传头像</span>
+     {% endif %}
+
+</div>
+                <button type="submit" class="btn btn-default">Submit</button>
+                {% with message = get_flashed_messages(True, "my_error") %}
+                {% if message %} {{ message[0][1] }}{% endif %}
+                {% endwith %}
+			</form>
+		</div>
+	</div>
+    </br>
+{% endblock %}

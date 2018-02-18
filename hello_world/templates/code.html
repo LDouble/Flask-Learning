@@ -1,0 +1,31 @@
+{% extends "Basic.html" %}
+{% block body %}
+    <style>
+    .linenums li {
+    list-style-type: decimal;
+}
+    </style>
+    <body class="container" onload="prettyPrint()">
+	<div class="row clearfix">
+		<div class="col-md-offset-4 col-md-8 column">
+			<div class="page-header">
+				<h1>
+					Flask 快速入门 <small>{{ title }}</small>
+				</h1>
+			</div>
+		</div>
+	</div>
+    <div class="row">
+        {% block pre%}
+        {% endblock %}
+        <div class="col-md-12">
+                <pre class="prettyprint Lang-py linenums">
+                {{ code }}
+                </pre>
+        </div>
+    </div>
+    {% block more %}
+
+    {% endblock %}
+    </body>
+{% endblock %}

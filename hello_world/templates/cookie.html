@@ -1,0 +1,30 @@
+{% extends "code.html" %}
+{% block pre %}
+    		<div class="col-md-10 col-md-offset-1">
+			<form class="form-inline" role="form" method="post" action="{{ url_for("cookie") }}">
+				<div class="form-group">
+					 <label for="name">cookie名称</label>
+                    <input type="text" class="form-control" id="username" name="name" />
+				</div>
+				<div class="form-group">
+					 <label for="password">值</label>
+                    <input type="text" class="form-control" id="password" name="value" />
+				</div>
+                <button type="submit" class="btn btn-default">Submit</button>
+                {% with message = get_flashed_messages(True,"login_error") %}
+                {% if message %} {{ message[0][1] }}{% endif %}
+                {% endwith %}
+			</form>
+		</div>
+    <div class="col-md-12">
+    <pre id="show" class="prettyprint Lang-py linenums">
+
+    </pre>
+    </div>
+{% endblock %}
+{% block more%}
+    <script>
+    result = JSON.stringify({{ str|safe }}, null, "\t");
+    document.getElementById("show").innerHTML = (result)
+    </script>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "Basic.html" %}
+{% block body %}
+<body class="container">
+
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+{% if url %}
+<a href="{{ url }}">点击我跳转</a>
+{% endif %}
+</body>
+{% endblock %}
