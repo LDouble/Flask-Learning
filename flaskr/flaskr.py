@@ -1,6 +1,24 @@
 import os
 import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
+from flask_wtf import FlaskForm
+from wtforms.fields import SubmitField,StringField,SelectField
+from flask_bootstrap import  Bootstrap
+
+
+class SubmitForm(FlaskForm):
+    xq = SelectField("校区",choices=[("2", "崂山校区"), ("1", "鱼山校区")])
+    lx = SelectField("类型",choices=[("1", "四级"), ("2", "六级")])
+    js = StringField("教室号")
+    kch = StringField("考场号")
+    submit = SubmitField("提交")
+
+
+class QueryForm(FlaskForm):
+    xq = SelectField("校区",choices=[("2", "崂山校区"), ("1", "鱼山校区")])
+    lx = SelectField("类型",choices=[("1", "四级"), ("2", "六级")])
+    js = StringField("教室号")
+    submit = SubmitField("提交")
 
 
 app = Flask(__name__)
@@ -12,6 +30,7 @@ app.config.update(
         PASSWORD="password"
     )
 )
+bootstrap = Bootstrap(app)
 app.config.from_envvar("FLASKR_SETTINGS", silent=True)
 # 设置一个名为 FLASKR_SETTINGS 环境变量来设定一个配置文件载入后是否覆盖默认值。
 # 静默开关告诉 Flask 不去关心这个环境变量键值是否存
@@ -91,6 +110,37 @@ def logout():
     session.pop("uid")
     flash("注销成功!")
     return redirect(url_for("login"))
+
+
+@app.route("/cet_submit",methods=["POST","GET"])
+def cet_submit():
+    form = SubmitForm()
+    if form.validate_on_submit():
+        data = form.data
+        db = get_db()
+        db.execute("INSERT  INTO cet (xq,lx,js,kch) VALUES (?,?,?,?)",
+                   [form.xq.data,form.lx.data,form.js.data,form.kch.data])
+        db.commit()
+        flash('感谢你的提交!')
+        return redirect(url_for("cet_query"))
+    return render_template("submit.html", form=form, title="四六级")
+
+
+@app.route("/cet_query/",methods=['POST','GET'])
+def cet_query():
+    form = QueryForm()
+    db = get_db()
+    if form.validate_on_submit():
+        xq = form.xq.data
+        lx = form.lx.data
+        js = form.js.data
+        js = "%" + js + "%"
+        cur = db.execute("select xq,lx,js,kch FROM cet where xq = ? and lx = ? and js like ?",
+                         [xq, lx, js])
+    else:
+        cur = db.execute("select xq,lx,js,kch FROM cet  group by xq,kch")
+    entries = cur.fetchall()
+    return render_template("cet_query.html", form = form, entries=entries)
 
 
 if __name__ == "__main__":

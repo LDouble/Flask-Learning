@@ -1,0 +1,12 @@
+{% extends 'bootstrap/base.html' %}  #声明继承
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+    {% import "bootstrap/wtf.html" as wtf %}
+    {{ wtf.quick_form(form) }}
+    <br/>
+        <a class="btn-primary btn-sm" href="{{ url_for("cet_query") }}">我要查询考场号</a>
+    </div>
+{% endblock content %}

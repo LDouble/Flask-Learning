@@ -1,0 +1,69 @@
+{% extends 'bootstrap/base.html' %}  #声明继承
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {% import "bootstrap/wtf.html" as wtf %}
+        {{ wtf.quick_form(form) }}
+    <br/>
+    <a class="btn-primary btn-sm" href="{{ url_for("cet_submit") }}">我要提交考场号</a>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    校区
+                </th>
+                <th>
+                    类型
+                </th>
+                <th>
+                    教室
+                </th>
+                <th>
+                    考场号
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for x in entries %}
+                <tr>
+                    {% if x["xq"] == "2" %}
+                        <td>
+                            崂山校区
+                        </td>
+                    {% else %}
+                        <td>
+                            鱼山校区
+                        </td>
+                    {% endif %}
+                    {% if x["lx"] == "1" %}
+                        <td>
+                            四级
+                        </td>
+                    {% else %}
+                        <td>
+                            六级
+                        </td>
+                    {% endif %}
+                    <td>
+                        {{ x["js"] }}
+                    </td>
+                    <td>
+                        {{ x["kch"] }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}
